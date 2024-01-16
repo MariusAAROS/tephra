@@ -18,8 +18,7 @@ traces = [i for i in range(9, 35)]
 params = {'l2_regularization': 1.5,
           'learning_rate': 0.1,
           'max_depth': 25,
-          'max_iter': 1500,
-          'scoring': 'f1_micro'}
+          'max_iter': 1500}
 
 class Classifier(BaseEstimator):
     def __init__(self):
