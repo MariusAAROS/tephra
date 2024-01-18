@@ -2,8 +2,8 @@ import pandas as pd
 from sklearn.experimental import enable_iterative_imputer
 from sklearn.impute import IterativeImputer, SimpleImputer
 from sklearn.linear_model import BayesianRidge
-from sklearn.svm import SVR
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.feature_selection import SelectFromModel
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
 
 basedir = r"data/"
@@ -44,10 +44,26 @@ test[majors] = iter_impt.transform(test[majors])
 train[traces] = smpl_impt.fit_transform(train[traces])
 test[traces] = smpl_impt.transform(test[traces])
 
+X_train = train.loc[:, train.columns != 'Event']
+y_train = train["Event"]
+X_test = test.loc[:, test.columns != 'Event']
+y_test = test["Event"]
+
+feature_selector = SelectFromModel(RandomForestClassifier(random_state=56))
+
+X_train  = feature_selector.fit_transform(X_train, y_train)
+X_test  = feature_selector.transform(X_test)
+
 scaler = StandardScaler()
 
-train.loc[:, train.columns != 'Event'] = scaler.fit_transform(train.loc[:, train.columns != 'Event'])
-test.loc[:, test.columns != 'Event'] = scaler.transform(test.loc[:, test.columns != 'Event'])
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+X_train = pd.DataFrame(X_train)
+X_test = pd.DataFrame(X_test)
+
+train = pd.concat((X_train, y_train), axis=1)
+test = pd.concat((X_test, y_test), axis=1)
 
 train.to_csv(basedir + "train_preprocessed.csv", index=False)
 test.to_csv(basedir + "test_preprocessed.csv", index=False)
