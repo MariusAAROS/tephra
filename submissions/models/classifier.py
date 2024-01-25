@@ -3,6 +3,7 @@ import pandas as pd
 from sklearn.ensemble import StackingClassifier
 from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
 
 from sklearn.base import BaseEstimator
 from sklearn.pipeline import make_pipeline, Pipeline
@@ -27,6 +28,9 @@ params_logreg = {'C': 209.48275862068965,
                  'penalty': 'l2',
                  'solver': 'newton-cg',
                  'warm_start': True}
+params_svc = {'C': 150.0, 
+              'gamma': 0.046415888336127774, 
+              'kernel': 'rbf'}
 
 class Classifier(BaseEstimator):
     def __init__(self):
@@ -40,6 +44,7 @@ class Classifier(BaseEstimator):
         ])
         self.estimators = [
             ("hist_gradient_boosting", HistGradientBoostingClassifier(**params_hgb)),
+            ("svc", SVC(**params_svc)),
             ("logistic_regression", LogisticRegression(**params_logreg))
         ]
         self.model = StackingClassifier(estimators=self.estimators)
