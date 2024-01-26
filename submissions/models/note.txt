@@ -1,2 +1,0 @@
-add scaling only for log reg 
-add new potential models like rf

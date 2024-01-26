@@ -35,12 +35,11 @@ majors_idx = [X_train.columns.get_loc(c) for c in majors if c in X_train]
 traces_idx = [X_train.columns.get_loc(c) for c in traces if c in X_train]
 
 params = {
-    'n_estimators': [i for i in range(50, 500, 5)],
-    'max_depth': [i for i in range(10, 100, 5)],
-    'min_samples_split': [i for i in range(2, 10, 2)],
-    'min_samples_leaf': [i for i in range(1, 10, 2)],
-    'max_features': ['auto', 'sqrt', 'log2'],
-    'bootstrap': [True, False],
+    'n_estimators': [ 40, 45, 50],
+    'max_depth': [25],
+    'min_samples_split': [8],
+    'min_samples_leaf': [3],
+    'max_features': ['log2', 'sqrt']
 }
 
 gs = GridSearchCV(RandomForestClassifier(),
