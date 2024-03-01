@@ -100,3 +100,6 @@ automl.fit(X_train, y_train, **settings)
 
 # Export best parameters for each model
 dump(automl.model.estimator, savedir + "xgb_best_estimator.joblib")
+
+best_config = automl.best_config
+print("Best Configuration:", best_config)
