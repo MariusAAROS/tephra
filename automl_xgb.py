@@ -89,7 +89,7 @@ def balanced_accuracy(
 
 automl = AutoML()
 settings = {
-    "time_budget": 10,  # total running time in seconds
+    "time_budget": 14400,  # total running time in seconds
     "metric": 'accuracy',  # primary metric
     "task": 'classification',
     "estimator_list": ['xgboost'],  # list of ML learners
